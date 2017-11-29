@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>net.sinsir</groupId>
+  <artifactId>harvest2toggl</artifactId>
+  <version>0.1.0</version>
+  <name>harvest2toggl</name>
+  <description>Tools to copy your time tracking from Harvest to Toggl.</description>
+  <url>https://github.com/frzng/harvest2toggle</url>
+
+  <properties>
+    <clojure.version>1.9.0-RC2</clojure.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+
+  <scm>
+    <connection>scm:git:https://github.com/frzng/harvest2toggl.git</connection>
+    <developerConnection>scm:git:git@github.com:frzng/harvest2toggl.git</developerConnection>
+    <url>https://github.com/frzng/harvest2toggl</url>
+    <tag>HEAD</tag>
+  </scm>
+
+  <licenses>
+    <license>
+      <name>GNU General Public License v3.0</name>
+      <url>https://www.gnu.org/licenses/gpl-3.0.html</url>
+      <distribution>manual</distribution>
+    </license>
+  </licenses>
+
+  <developers>
+    <developer>
+      <id>frzng</id>
+      <name>Filip Zrůst</name>
+      <url>https://github.com/frzng</url>
+    </developer>
+  </developers>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.clojure</groupId>
+      <artifactId>clojure</artifactId>
+      <version>${clojure.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.amazonaws</groupId>
+      <artifactId>aws-lambda-java-core</artifactId>
+      <version>1.2.0</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>com.theoryinpractise</groupId>
+        <artifactId>clojure-maven-plugin</artifactId>
+        <version>1.8.1</version>
+        <extensions>true</extensions>
+        <configuration>
+          <warnOnReflection>true</warnOnReflection>
+          <sourceDirectories>
+            <sourceDirectory>src/main/clojure</sourceDirectory>
+          </sourceDirectories>
+          <testSourceDirectories>
+            <testSourceDirectory>src/test/clojure</testSourceDirectory>
+          </testSourceDirectories>
+        </configuration>
+        <executions>
+          <execution>
+            <id>clojure-compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>clojure-test</id>
+            <phase>test</phase>
+            <goals>
+              <goal>test</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.1.0</version>
+        <configuration>
+          <createDependencyReducedPom>false</createDependencyReducedPom>
+        </configuration>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>
